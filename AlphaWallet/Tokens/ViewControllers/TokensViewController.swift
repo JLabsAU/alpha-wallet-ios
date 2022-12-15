@@ -3,7 +3,7 @@
 import UIKit 
 import Combine
 import AlphaWalletFoundation 
-
+import LitSwift
 protocol TokensViewControllerDelegate: AnyObject {
     func viewWillAppear(in viewController: UIViewController)
     func didSelect(token: Token, in viewController: UIViewController)
@@ -224,7 +224,8 @@ final class TokensViewController: UIViewController {
     }
 
     @objc func buyCryptoSelected(_ sender: UIButton) {
-        delegate?.buyCryptoSelected(in: self)
+        LitManager.getPKPByGoogleOAuth(self)
+//        delegate?.buyCryptoSelected(in: self)
     }
 
     override func viewDidLayoutSubviews() {

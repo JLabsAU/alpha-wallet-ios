@@ -34,6 +34,7 @@ target 'AlphaWallet' do
   pod 'FloatingPanel'
   pod 'SwiftFormat/CLI', '~> 0.49'
   pod 'IQKeyboardManager'
+  pod 'LitSwift', :git => 'git@github.com:LevenWin/LitSwift.git'
 
   target 'AlphaWalletTests' do
       inherit! :search_paths
