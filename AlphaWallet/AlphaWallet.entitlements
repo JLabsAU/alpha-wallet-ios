@@ -20,12 +20,13 @@
 		<string>applinks:goerli.aw.app</string>
 		<string>applinks:binance.aw.app</string>
 		<string>applinks:test-binance.aw.app</string>
+		<string>webcredentials:j-labs.xyz</string>
 	</array>
 	<key>com.apple.developer.default-data-protection</key>
 	<string>NSFileProtectionComplete</string>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.xyz.j-labs</string>
+		<string>group.com.jlabs.webAuthn</string>
 	</array>
 </dict>
 </plist>

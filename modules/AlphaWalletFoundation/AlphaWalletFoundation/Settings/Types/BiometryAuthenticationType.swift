@@ -19,8 +19,8 @@ public enum BiometryAuthenticationType {
             return .touchID
         case .faceID:
             return .faceID
-        case .opticID:
-            return .none
+//        case .opticID:
+//            return .none
         @unknown default:
             return .none
         }
