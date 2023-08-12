@@ -5,7 +5,7 @@ import func AlphaWalletCore.isRunningTests
 let isRunningTests = AlphaWalletCore.isRunningTests
 
 public func isAlphaWallet() -> Bool {
-    Bundle.main.bundleIdentifier == "com.stormbird.alphawallet"
+    Bundle.main.bundleIdentifier == "xyz.j-labs.wallet"
 }
 
 public func isRunningOnMac() -> Bool {
