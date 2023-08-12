@@ -6319,6 +6319,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 9XX98238M5;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6338,6 +6339,7 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "$(ALPHAWALLET_PRODUCT_BUNDLE_IDENTIFIER)";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = "xyz.j-labs.wallet";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "$(SWIFT_MODULE_NAME)-Swift.h ";
 				SWIFT_VERSION = 5.0;
@@ -6359,6 +6361,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9XX98238M5;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6377,6 +6380,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(ALPHAWALLET_PRODUCT_BUNDLE_IDENTIFIER)";
+				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = "xyz.j-labs.wallet";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "$(SWIFT_MODULE_NAME)-Swift.h ";
 				SWIFT_VERSION = 5.0;
@@ -6391,6 +6395,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 9XX98238M5;
 				INFOPLIST_FILE = AlphaWalletTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -6398,7 +6403,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.stormbird.AlphaWalletTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "xyz.j-labs.wallet.Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AlphaWallet.app/AlphaWallet";
@@ -6412,6 +6417,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 9XX98238M5;
 				INFOPLIST_FILE = AlphaWalletTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -6419,7 +6425,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.stormbird.AlphaWalletTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "xyz.j-labs.wallet.Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AlphaWallet.app/AlphaWallet";
@@ -6436,6 +6442,7 @@
 				CODE_SIGN_ENTITLEMENTS = AlphaWalletSafariExtension/AlphaWalletSafariExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 9XX98238M5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AlphaWalletSafariExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AlphaWalletSafariExtension;
@@ -6452,7 +6459,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.stormbird.alphawallet.AlphaWalletSafariExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = "xyz.j-labs.wallet.WalletSafariExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -6470,6 +6477,7 @@
 				CODE_SIGN_ENTITLEMENTS = AlphaWalletSafariExtension/AlphaWalletSafariExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 9XX98238M5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AlphaWalletSafariExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = AlphaWalletSafariExtension;
@@ -6485,7 +6493,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.stormbird.alphawallet.AlphaWalletSafariExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = "xyz.j-labs.wallet.WalletSafariExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -6503,6 +6511,7 @@
 				CODE_SIGN_ENTITLEMENTS = AlphaWalletShare/AlphaWalletShare.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 9XX98238M5;
 				INFOPLIST_FILE = AlphaWalletShare/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -6513,7 +6522,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = NO;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.stormbird.alphawallet.AlphaWalletShare;
+				PRODUCT_BUNDLE_IDENTIFIER = "xyz.j-labs.wallet.WalletShare";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -6530,6 +6539,7 @@
 				CODE_SIGN_ENTITLEMENTS = AlphaWalletShare/AlphaWalletShare.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 9XX98238M5;
 				INFOPLIST_FILE = AlphaWalletShare/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -6538,7 +6548,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MTL_FAST_MATH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.stormbird.alphawallet.AlphaWalletShare;
+				PRODUCT_BUNDLE_IDENTIFIER = "xyz.j-labs.wallet.WalletShare";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
