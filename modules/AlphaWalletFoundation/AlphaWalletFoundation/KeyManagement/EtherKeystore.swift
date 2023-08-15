@@ -61,6 +61,7 @@ public protocol SecuredStorage {
 ///(A) to be confident that we don't cause the user to lose access to their wallets and
 ///(B) to be consistent with Android's UI and implementation which seems like users will lose access to the data (i.e wallet) which requires user presence if the equivalent of their iOS passcode/biometrics is disabled/deleted
 open class EtherKeystore: NSObject, Keystore {
+    
     private struct Keys {
         static let recentlyUsedAddress: String = "recentlyUsedAddress"
         static let ethereumRawPrivateKeyUserPresenceNotRequiredPrefix = "ethereumRawPrivateKeyUserPresenceNotRequired-"
@@ -90,7 +91,7 @@ open class EtherKeystore: NSObject, Keystore {
     private var analytics: AnalyticsLogger
     private let legacyFileBasedKeystore: LegacyFileBasedKeystore
     private let queue = DispatchQueue(label: "org.alphawallet.swift.etherKeystore", qos: .userInitiated)
-
+    private var userStore: UserStore
     private var isSimulator: Bool {
         TARGET_OS_SIMULATOR != 0
     }
@@ -105,7 +106,16 @@ open class EtherKeystore: NSObject, Keystore {
             return authContext.canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
         }
     }
-
+    public var currentUserName: String? {
+        set {
+            userStore.currentUserName = newValue
+        }
+        
+        get {
+            return userStore.currentUserName
+        }
+       
+    }
     public var hasWallets: Bool {
         return !wallets.isEmpty
     }
@@ -156,10 +166,12 @@ open class EtherKeystore: NSObject, Keystore {
                 walletAddressesStore: WalletAddressesStore,
                 analytics: AnalyticsLogger,
                 legacyFileBasedKeystore: LegacyFileBasedKeystore,
+                userStore: UserStore,
                 hardwareWalletFactory: HardwareWalletFactory) {
 
         self.keychain = keychain
         self.analytics = analytics
+        self.userStore = userStore
         self.walletAddressesStore = walletAddressesStore
         self.legacyFileBasedKeystore = legacyFileBasedKeystore
         self.walletsSubject = .init(Set(walletAddressesStore.wallets))

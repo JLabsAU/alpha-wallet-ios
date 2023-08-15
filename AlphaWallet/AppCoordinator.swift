@@ -13,7 +13,7 @@ class AppCoordinator: NSObject, Coordinator, ApplicationNavigatable {
     private let navigationSubject = CurrentValueSubject<ApplicationNavigation, Never>(.onboarding)
     private let application: Application
     private var keystore: Keystore
-    private let window: UIWindow
+    let window: UIWindow
     private var initialWalletCreationCoordinator: InitialWalletCreationCoordinator? {
         return coordinators.compactMap { $0 as? InitialWalletCreationCoordinator }.first
     }
@@ -95,7 +95,6 @@ class AppCoordinator: NSObject, Coordinator, ApplicationNavigatable {
         self.navigationController = navigationController
         self.window = window
         self.keystore = application.keystore
-
         super.init()
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
@@ -456,5 +455,24 @@ extension AppCoordinator: AccountsCoordinatorDelegate {
         activeWalletCoordinator.showTabBar(animated: animated)
         navigationSubject.send(.selectedWallet)
         latestActiveWalletCoordinator = nil
+    }
+}
+/// MPC User register or login
+extension AppCoordinator: MPCInitUserCreationCoordinatorDelegate {
+    func showCreateUser() {
+        let coordinator = MPCInitUserCreationCoordinator(
+            config: application.config,
+            navigationController: navigationController,
+            keystore: keystore)
+        coordinator.delegate = self
+        coordinator.start()
+        navigationSubject.send(.walletCreation)
+        addCoordinator(coordinator)
+    }
+    
+    func didAddUser(username: String, wallet: Wallet, coordinator: MPCInitUserCreationCoordinator) {
+        coordinator.navigationController.dismiss(animated: true)
+        removeCoordinator(coordinator)
+        showActiveWallet(for: wallet, animated: false)
     }
 }

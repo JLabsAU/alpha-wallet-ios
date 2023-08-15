@@ -7,19 +7,44 @@ import AlphaWalletNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate {
     private var appCoordinator: AppCoordinator!
     private var application: Application!
+    var window: UIWindow?
     //NOTE: create backgroundTaskService as soon as possible, code might not be executed when task get created too late
     private let backgroundTaskService: BackgroundTaskService = BackgroundTaskServiceImplementation()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         self.application = Application.shared
+        
         UNUserNotificationCenter.current().delegate = self
 
         //Keep this log because it's really useful for debugging things without requiring a new TestFlight/app store submission
         NSLog("Application launched with launchOptions: \(String(describing: launchOptions))")
         appCoordinator = AppCoordinator.create(application: self.application)
+        self.window = appCoordinator.window
         appCoordinator.start(launchOptions: launchOptions)
 
+        #if DEBUG
+        let longpress: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(debugTap(_:)))
+        longpress.numberOfTouchesRequired = 1
+        self.window?.addGestureRecognizer(longpress)
+        #endif
         return true
+    }
+    
+    @objc func debugTap(_ ges: UILongPressGestureRecognizer) {
+        switch ges.state {
+        case .began:
+            if let tab = self.window?.rootViewController as? UITabBarController, let nav = tab.selectedViewController as? UINavigationController, let vc = nav.topViewController {
+                UIWindow.toast("\(vc)")
+            } else if let nav = self.window?.rootViewController as? UINavigationController, let vc = nav.topViewController {
+                if let tab = vc as? UITabBarController, let nav = tab.selectedViewController as? UINavigationController, let vc = nav.topViewController {
+                    UIWindow.toast("\(vc)")
+                } else {
+                    UIWindow.toast("\(vc)")
+                }
+            }
+        default:
+            break
+        }
     }
 
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem) async -> Bool {

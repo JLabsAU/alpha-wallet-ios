@@ -13,6 +13,8 @@ public protocol Keystore: AnyObject {
     var recentlyUsedWallet: Wallet? { get set }
     var currentWallet: Wallet? { get }
 
+    var currentUserName: String? { get  set }
+    
     var didAddWallet: AnyPublisher<(wallet: Wallet, event: ImportWalletEvent), Never> { get }
     var didRemoveWallet: AnyPublisher<Wallet, Never> { get }
     var walletsPublisher: AnyPublisher<Set<Wallet>, Never> { get }

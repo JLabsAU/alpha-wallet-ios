@@ -29,6 +29,7 @@ protocol ApplicationNavigatable: RestartQueueNavigatable, DonationUserActivityNa
     func showActiveWallet(wallet: Wallet)
     func showActiveWalletIfNeeded()
     func show(error: Error)
+    func showCreateUser()
 }
 
 // swiftlint:disable type_body_length
@@ -92,11 +93,15 @@ class Application: WalletDependenciesProvidable {
         let securedStorage: SecuredStorage & SecuredPasswordStorage = try KeychainStorage()
         let legacyFileBasedKeystore = try LegacyFileBasedKeystore(securedStorage: securedStorage)
 
+        let userStore = DefaultUserStore(userDefaults: .standardOrForTests)
+        
         let keystore: Keystore = EtherKeystore(
             keychain: securedStorage,
             walletAddressesStore: walletAddressesStore,
+            
             analytics: analytics,
             legacyFileBasedKeystore: legacyFileBasedKeystore,
+            userStore: userStore,
             hardwareWalletFactory: BCHardwareWalletCreator())
 
         self.init(
@@ -316,7 +321,9 @@ class Application: WalletDependenciesProvidable {
         migrateToStoringRawPrivateKeysInKeychain()
         tokenActionsService.start()
 
-        if let wallet = keystore.currentWallet, keystore.hasWallets {
+        if keystore.currentUserName == nil {
+            navigation?.showCreateUser()
+        } else if let wallet = keystore.currentWallet, keystore.hasWallets {
             navigation?.showActiveWallet(wallet: wallet)
         } else {
             navigation?.showCreateWallet()

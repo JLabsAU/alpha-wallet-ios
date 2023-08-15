@@ -40,13 +40,19 @@ target 'AlphaWallet' do
   pod 'xcbeautify'
   pod 'FloatingPanel'
   pod 'IQKeyboardManager'
-
+  pod 'SnapKit'
   pod 'SwiftLint', '0.50.3', :configuration => 'Debug'
   pod 'SwiftFormat/CLI', '~> 0.49', :configuration => 'Debug'
   pod 'Firebase/Crashlytics'
   pod 'WalletConnectSwift', :git => 'https://github.com/AlphaWallet/WalletConnectSwift.git', :branch => 'alphaWallet'
   pod 'Starscream', '3.1.1'
 
+  pod 'SwiftyJSON'
+  pod 'PromiseKit'
+  pod 'Alamofire'
+  pod 'SVProgressHUD'
+  pod 'Toast-Swift'
+  pod 'SVGKit'
   target 'AlphaWalletTests' do
       inherit! :search_paths
       # Pods for testing
@@ -117,6 +123,7 @@ post_install do |installer|
       config.build_settings['EXPANDED_CODE_SIGN_IDENTITY'] = ""
       config.build_settings['CODE_SIGNING_REQUIRED'] = "NO"
       config.build_settings['CODE_SIGNING_ALLOWED'] = "NO"
+      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
      end
 
    target.build_configurations.each do |config|
