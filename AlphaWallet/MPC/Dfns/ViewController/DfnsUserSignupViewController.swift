@@ -87,6 +87,7 @@ class DfnsUserSignupViewController: UIViewController {
             make.left.equalTo(20)
             make.height.equalTo(48)
         }
+        self.passwordInput.isSecureTextEntry = true
         self.passwordInput.alpha = 0
         self.passwordInput.addedOn(self.view).snp.makeConstraints { make in
             make.centerX.equalToSuperview()
