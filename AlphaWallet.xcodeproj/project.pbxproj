@@ -154,6 +154,7 @@
 		442FCD76B5C25C9FB7FE7479 /* NFTCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442FCB182F854B307761CD82 /* NFTCollectionViewModel.swift */; };
 		442FCE0DAE5527A93F54022C /* RedeemTokenCardQuantitySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442FCC17EAB857C58732831E /* RedeemTokenCardQuantitySelectionViewController.swift */; };
 		442FCE2BEE8D475C7DEB39C1 /* RedeemTokenCardQuantitySelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442FC54DA900FA2F9BB73A63 /* RedeemTokenCardQuantitySelectionViewModel.swift */; };
+		4E00608B2A8CAD9400066096 /* dfns_yellow.svg in Resources */ = {isa = PBXBuildFile; fileRef = 4E00608A2A8CAD9400066096 /* dfns_yellow.svg */; };
 		598AF1B19BA0FC141BE44950 /* Pods_AlphaWalletShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11EA2601C4D0D445D99E4B33 /* Pods_AlphaWalletShare.framework */; };
 		5E7C701BFF4469B35A074EB9 /* RequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7C767497AD8DEE83F384D7 /* RequestViewModel.swift */; };
 		5E7C7041A8A78E0EF84A94A2 /* ActivityViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E7C71DB4EDD10EA665101C2 /* ActivityViewCell.swift */; };
@@ -870,7 +871,6 @@
 		BAA1EA8A2A8A30A900D2FEBC /* DfnsUserSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA1EA892A8A30A900D2FEBC /* DfnsUserSignupViewController.swift */; };
 		BAA1EA8D2A8A32B300D2FEBC /* DfnsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA1EA8C2A8A32B300D2FEBC /* DfnsManager.swift */; };
 		BAA1EA902A8A341500D2FEBC /* Extensions+mpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA1EA8F2A8A341500D2FEBC /* Extensions+mpc.swift */; };
-		BAA1EA962A8B233600D2FEBC /* dfns_yellow.svg in Resources */ = {isa = PBXBuildFile; fileRef = BAA1EA942A8B233600D2FEBC /* dfns_yellow.svg */; };
 		BAA1EA972A8B233600D2FEBC /* dfns_purple.svg in Resources */ = {isa = PBXBuildFile; fileRef = BAA1EA952A8B233600D2FEBC /* dfns_purple.svg */; };
 		BBF4F9B72029D0B3009E04C0 /* GasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF4F9B62029D0B2009E04C0 /* GasViewModel.swift */; };
 		C601B18924407D3B00C763D9 /* SettingViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C601B18624407D3A00C763D9 /* SettingViewHeader.swift */; };
@@ -1093,6 +1093,7 @@
 		442FCC17EAB857C58732831E /* RedeemTokenCardQuantitySelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedeemTokenCardQuantitySelectionViewController.swift; sourceTree = "<group>"; };
 		442FCC8150042FE9179D574A /* NFTCollectionCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTCollectionCoordinator.swift; sourceTree = "<group>"; };
 		442FCE526E2089CAE88D5602 /* FakeClaimOrderCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeClaimOrderCoordinator.swift; sourceTree = "<group>"; };
+		4E00608A2A8CAD9400066096 /* dfns_yellow.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = dfns_yellow.svg; sourceTree = "<group>"; };
 		4E16B6D97BD699F844AB4E2B /* Pods-AlphaWalletTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlphaWalletTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlphaWalletTests/Pods-AlphaWalletTests.release.xcconfig"; sourceTree = "<group>"; };
 		5E7C70088832B2D161EB4AAB /* SendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendViewController.swift; sourceTree = "<group>"; };
 		5E7C700CD3E43689E88FBE9B /* SetSellTokensCardExpiryDateViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetSellTokensCardExpiryDateViewModel.swift; sourceTree = "<group>"; };
@@ -1803,7 +1804,6 @@
 		BAA1EA892A8A30A900D2FEBC /* DfnsUserSignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DfnsUserSignupViewController.swift; sourceTree = "<group>"; };
 		BAA1EA8C2A8A32B300D2FEBC /* DfnsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DfnsManager.swift; sourceTree = "<group>"; };
 		BAA1EA8F2A8A341500D2FEBC /* Extensions+mpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+mpc.swift"; sourceTree = "<group>"; };
-		BAA1EA942A8B233600D2FEBC /* dfns_yellow.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = dfns_yellow.svg; path = ../../../../../../../Downloads/dfns_yellow.svg; sourceTree = "<group>"; };
 		BAA1EA952A8B233600D2FEBC /* dfns_purple.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = dfns_purple.svg; sourceTree = "<group>"; };
 		BBF4F9B62029D0B2009E04C0 /* GasViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GasViewModel.swift; sourceTree = "<group>"; };
 		C601B18624407D3A00C763D9 /* SettingViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewHeader.swift; sourceTree = "<group>"; };
@@ -4316,7 +4316,7 @@
 		87B1ACDE28C0D6660072A5E2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				BAA1EA912A8B22FE00D2FEBC /* Svg */,
+				BAA1EA912A8B22FE00D2FEBC /* svg */,
 				2912CD011F6A830700C6CBE3 /* Assets.xcassets */,
 				613D04881FDE15F8008DE72E /* COMODO ECC Domain Validation Secure Server CA 2.cer */,
 				C868C5282053BDE00059672B /* LaunchScreen.storyboard */,
@@ -4560,13 +4560,13 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
-		BAA1EA912A8B22FE00D2FEBC /* Svg */ = {
+		BAA1EA912A8B22FE00D2FEBC /* svg */ = {
 			isa = PBXGroup;
 			children = (
+				4E00608A2A8CAD9400066096 /* dfns_yellow.svg */,
 				BAA1EA952A8B233600D2FEBC /* dfns_purple.svg */,
-				BAA1EA942A8B233600D2FEBC /* dfns_yellow.svg */,
 			);
-			path = Svg;
+			path = svg;
 			sourceTree = "<group>";
 		};
 		C80DC77C22AB7FAD009CFA1C /* TokenScriptFiles */ = {
@@ -4871,7 +4871,7 @@
 				5E7C706322B52C0D0CED8018 /* aETH.tsml in Resources */,
 				877239CB28F7DCE00062DC14 /* GoogleService-InfoTests.plist in Resources */,
 				5E7C7CE29C74DF7FDDDB6A0D /* ERC721-TokenScript.tsml in Resources */,
-				BAA1EA962A8B233600D2FEBC /* dfns_yellow.svg in Resources */,
+				4E00608B2A8CAD9400066096 /* dfns_yellow.svg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5024,7 +5024,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Don't run this during index builds\nif [ $ACTION = \"indexbuild\" ]; then exit 0; fi\n\nSCRIPT_PATH=\"${PODS_ROOT}/Apollo/scripts\"\nSCHEMA_PATH=\"${SRCROOT}/modules/AlphaWalletFoundation/AlphaWalletFoundation/NFT/Enjin\"\nexport http_proxy=http://127.0.0.1:1087;export https_proxy=http://127.0.0.1:1087;export ALL_PROXY=socks5://127.0.0.1:1086\n\ncd \"${SCHEMA_PATH}\"\n\"${SCRIPT_PATH}\"/run-bundled-codegen.sh codegen:generate --target=swift --includes=./**/*.graphql --localSchemaFile=\"${SCHEMA_PATH}/schema.json\" API.swift\n#Download graphql scheme \n#\"${SCRIPT_PATH}\"/run-bundled-codegen.sh schema:download --endpoint=\"https://cloud.enjin.io/graphql/default\" API.swift\n";
+			shellScript = "# Don't run this during index builds\nif [ $ACTION = \"indexbuild\" ]; then exit 0; fi\n\nSCRIPT_PATH=\"${PODS_ROOT}/Apollo/scripts\"\nSCHEMA_PATH=\"${SRCROOT}/modules/AlphaWalletFoundation/AlphaWalletFoundation/NFT/Enjin\"\n# export http_proxy=http://127.0.0.1:1087;export https_proxy=http://127.0.0.1:1087;export ALL_PROXY=socks5://127.0.0.1:1086\n\ncd \"${SCHEMA_PATH}\"\n\"${SCRIPT_PATH}\"/run-bundled-codegen.sh codegen:generate --target=swift --includes=./**/*.graphql --localSchemaFile=\"${SCHEMA_PATH}/schema.json\" API.swift\n#Download graphql scheme \n#\"${SCRIPT_PATH}\"/run-bundled-codegen.sh schema:download --endpoint=\"https://cloud.enjin.io/graphql/default\" API.swift\n";
 			showEnvVarsInLog = 0;
 		};
 		87FBF2B828056D8600616B7D /* Upload debug symbols to Crashlytics */ = {

@@ -236,13 +236,18 @@ PODS:
   - SAMKeychain (1.5.3)
   - secp256k1_ios (0.1.3)
   - SipHash (1.2.2)
+  - SnapKit (5.6.0)
   - Starscream (3.1.1)
   - StatefulViewController (3.0)
+  - SVGKit (3.0.0):
+    - CocoaLumberjack (~> 3.0)
+  - SVProgressHUD (2.2.5)
   - SwiftAlgorithms (1.0.0)
   - SwiftFormat/CLI (0.50.3)
   - SwiftLint (0.50.3)
   - SwiftProtobuf (1.18.0)
   - SwiftyJSON (5.0.0)
+  - Toast-Swift (5.0.1)
   - TrezorCrypto (0.0.9)
   - TrustKeystore (0.1.3):
     - CryptoSwift (~> 1.0)
@@ -259,6 +264,7 @@ PODS:
   - xcbeautify (0.11.0)
 
 DEPENDENCIES:
+  - Alamofire
   - AlphaWalletABI (from `.`)
   - AlphaWalletAddress (from `.`)
   - AlphaWalletAttestation (from `.`)
@@ -289,14 +295,20 @@ DEPENDENCIES:
   - MailchimpSDK
   - MBProgressHUD
   - Mixpanel-swift (~> 3.1)
+  - PromiseKit
   - PromiseKit/CorePromise
   - QRCodeReaderViewController (from `https://github.com/AlphaWallet/QRCodeReaderViewController.git`, commit `09da2d4b835589972ecacd022a75bc27b2c1d1bd`)
   - R.swift
   - SAMKeychain
+  - SnapKit
   - Starscream (= 3.1.1)
   - StatefulViewController
+  - SVGKit
+  - SVProgressHUD
   - SwiftFormat/CLI (~> 0.49)
   - SwiftLint (= 0.50.3)
+  - SwiftyJSON
+  - Toast-Swift
   - TrezorCrypto (from `https://github.com/AlphaWallet/trezor-crypto-ios.git`, commit `50c16ba5527e269bbc838e80aee5bac0fe304cc7`)
   - TrustKeystore (from `https://github.com/AlphaWallet/latest-keystore-snapshot`, commit `c0bdc4f6ffc117b103e19d17b83109d4f5a0e764`)
   - WalletConnectSwift (from `https://github.com/AlphaWallet/WalletConnectSwift.git`, branch `alphaWallet`)
@@ -344,13 +356,17 @@ SPEC REPOS:
     - SAMKeychain
     - secp256k1_ios
     - SipHash
+    - SnapKit
     - Starscream
     - StatefulViewController
+    - SVGKit
+    - SVProgressHUD
     - SwiftAlgorithms
     - SwiftFormat
     - SwiftLint
     - SwiftProtobuf
     - SwiftyJSON
+    - Toast-Swift
     - TrustWalletCore
     - xcbeautify
 
@@ -500,19 +516,23 @@ SPEC CHECKSUMS:
   SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
   secp256k1_ios: ac9ef04e761f43c58012b28548afa91493761f17
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
   StatefulViewController: 4803bf900d44de26074344998e10e041113b5931
+  SVGKit: 1ad7513f8c74d9652f94ed64ddecda1a23864dea
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
   SwiftFormat: 61cda3819dc3a7d69795ce0430e1e1d53c4a4fb2
   SwiftLint: 77f7cb2b9bb81ab4a12fcc86448ba3f11afa50c6
   SwiftProtobuf: c3c12645230d9b09c72267e0de89468c5543bd86
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
+  Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   TrezorCrypto: bfeea47a052dca2c77d4a39e1e183865e52de14d
   TrustKeystore: 3d8b4571c66648fb985015c96b3185440bb837fe
   TrustWalletCore: a92d85baa15932279cce925559e93695558cafdd
   WalletConnectSwift: 6309bf3011b0b30e3e9d1e7449535302a9240f71
   xcbeautify: b2c6b50c9cab6414296898e94cd153e4ea879662
 
-PODFILE CHECKSUM: ba625630b5fb0d4612edda37f0cf39403048a5b0
+PODFILE CHECKSUM: 41756905aeaeb0dc5209fb039145638d191e2253
 
 COCOAPODS: 1.11.3
