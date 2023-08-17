@@ -180,7 +180,7 @@ extension WalletConnectProvider: WalletConnectServerDelegate {
         }
 
         switch wallet.type {
-        case .real, .hardware: break
+        case .real, .hardware, .dfns: break
         case .watch:
             if config.development.shouldPretendIsRealWallet {
                 break

@@ -143,7 +143,7 @@ public struct TokenInstanceActionAdapter {
         }
 
         switch session.account.type {
-        case .real, .hardware:
+        case .real, .hardware, .dfns:
             return _configButton(action: action)
         case .watch:
             if session.config.development.shouldPretendIsRealWallet {

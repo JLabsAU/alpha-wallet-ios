@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 import AlphaWalletFoundation
 import Combine
+import PromiseKit
+import SwiftyJSON
 protocol MPCInitUserCreationCoordinatorDelegate: AnyObject {
     func didAddUser(username: String, wallet: Wallet, coordinator: MPCInitUserCreationCoordinator)
 }
@@ -53,7 +55,61 @@ extension MPCInitUserCreationCoordinator: DfnsInitUserCreationCoordinatorDelegat
     }
     
     func didSignIn(user: String) {
-        self.createInstantWallet(username: user)
+        if #available(iOS 15.0, *) {
+            UIWindow.showLoading()
+            let _ = loadDfnsWallets().done { json in
+                if let address = json["items"].arrayValue.first?["address"].stringValue {
+                    if let curWallet = self.keystore.wallets.first(where: { $0.address.eip55String ==  AlphaWallet.Address(string: address)?.eip55String && $0.origin == .dfns }) {
+                        self.delegate?.didAddUser(username: user, wallet: curWallet, coordinator: self)
+                    } else {
+                        let _ = self.importWallet(json).done { wallet in
+                            self.delegate?.didAddUser(username: user, wallet: wallet, coordinator: self)
+                        }
+                    }
+                } else {
+                    self.createAndLoadWallete(user)
+                }
+            }.ensure {
+
+            }.catch { error in
+                UIWindow.toast(error.localizedDescription)
+            }
+        }
+    }
+    
+    @available(iOS 15.0, *)
+    func createAndLoadWallete(_ username: String) {
+        UIWindow.showLoading()
+        let _ = self.createDfnsWallet().then { json in
+            return self.loadDfnsWallets()
+        }.then { json in
+            return self.importWallet(json)
+        }.done { wallet in
+            self.delegate?.didAddUser(username: username, wallet: wallet, coordinator: self)
+        }.ensure {
+           
+        }.catch { err in
+            UIWindow.toast(err.localizedDescription)
+        }
+    }
+    
+    func importWallet(_ json: JSON) -> Promise<Wallet> {
+        return Promise { resolver in
+            let address: String = json["items"].arrayValue.first?["address"].stringValue ?? ""
+            self.keystore.addWallet(address: .init(string: address)!, origin: .dfns).sink { wallet in
+                resolver.fulfill(wallet)
+            }.store(in: &cancellable)
+        }
+    }
+    
+    @available(iOS 15.0, *)
+    func createDfnsWallet() -> Promise<JSON> {
+        return DfnsManager.shared.createWallet(net: "EthereumSepolia")
+    }
+    
+    @available(iOS 15.0, *)
+    func loadDfnsWallets() -> Promise<JSON> {
+        return DfnsManager.shared.listWallets()
     }
     
     func createInstantWallet(username: String) {

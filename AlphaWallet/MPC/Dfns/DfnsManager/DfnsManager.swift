@@ -92,16 +92,6 @@ class DfnsManager {
                 }
             }
         }.then { credential in
-//            return {
-//                  kind: 'Fido2',
-//                  credentialAssertion: {
-//                    credId: credential.id,
-//                    clientData: toBase64Url(Buffer.from(assertion.clientDataJSON)),
-//                    authenticatorData: toBase64Url(Buffer.from(assertion.authenticatorData)),
-//                    signature: toBase64Url(Buffer.from(assertion.signature)),
-//                    userHandle: assertion.userHandle ? toBase64Url(Buffer.from(assertion.userHandle)) : '',
-//                  },
-//                }
             let authenticatorData = credential.rawAuthenticatorData.toBase64Url()
             let rawClientDataJSON = credential.rawClientDataJSON.toBase64Url()
             let credentialID = credential.credentialID.toBase64Url()
@@ -463,8 +453,8 @@ extension DataRequest {
         return Promise<JSON> { resover in
             let _ = self.response { res in
                 if res.response?.statusCode == 401 {
-                    
-                    //
+                    resover.reject(NSError(domain: "", code: 401))
+
                 } else {
                     switch res.result {
                     case .success(let data):

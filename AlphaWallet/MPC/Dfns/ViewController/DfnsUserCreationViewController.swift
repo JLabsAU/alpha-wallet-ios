@@ -47,7 +47,7 @@ class DfnsUserCreationViewController: UIViewController, DfnsUserSignupViewContro
         NSLayoutConstraint.activate([
             imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -60),
-
+            imageView.widthAnchor.constraint(equalToConstant: 300),
             titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20),
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
@@ -66,7 +66,7 @@ class DfnsUserCreationViewController: UIViewController, DfnsUserSignupViewContro
     
     func configure() {
         view.backgroundColor = Configuration.Color.Semantic.defaultViewBackground
-        imageView.image = UIImage.svg("dfns_purple")
+        imageView.image = UIImage.init(named: "dfns_purple")
         titleLabel.attributedText =  {
             let font: UIFont = ScreenChecker().isNarrowScreen ? Fonts.regular(size: 20) : Fonts.regular(size: 30)
             let paragraph = NSMutableParagraphStyle()

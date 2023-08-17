@@ -157,7 +157,7 @@ class AccountsCoordinator: Coordinator {
         controller.popoverPresentationController?.sourceView = sender
 
         switch account.type {
-        case .real:
+        case .real, .dfns:
             let actionTitle: String
             if account.origin == .hd {
                 actionTitle = R.string.localizable.walletsBackupHdWalletAlertSheetTitle()

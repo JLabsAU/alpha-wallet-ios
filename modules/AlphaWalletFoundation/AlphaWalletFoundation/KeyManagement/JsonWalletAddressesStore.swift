@@ -154,6 +154,8 @@ public struct JsonWalletAddressesStore: WalletAddressesStore {
             addToListOfWatchEthereumAddresses(wallet.address)
         case .hardware:
             addToListOfEthereumAddressesWithHardwareWallet(wallet.address)
+        case .dfns:
+            addToListOfEthereumAddressesWithPrivateKeys(wallet.address)
         }
     }
 

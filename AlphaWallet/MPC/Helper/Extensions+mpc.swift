@@ -148,8 +148,7 @@ extension UIImage {
             }
 
         }
-        return imageResult
-        
+        return imageResult        
     }
     func fillColor(_ color: UIColor) -> UIImage? {
         let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)

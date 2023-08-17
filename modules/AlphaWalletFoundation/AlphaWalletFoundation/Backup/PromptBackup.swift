@@ -264,7 +264,7 @@ public class PromptBackup {
         switch wallet.type {
         case .real:
             return true
-        case .watch, .hardware:
+        case .watch, .hardware, .dfns:
             return false
         }
     }
@@ -296,7 +296,7 @@ public class PromptBackup {
             } else {
                 return .notBackedUp
             }
-        case .watch, .hardware:
+        case .watch, .hardware, .dfns:
             return nil
         }
     }

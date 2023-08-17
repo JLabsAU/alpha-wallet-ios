@@ -139,7 +139,7 @@ final class NFTCollectionViewModel {
             guard Features.current.isAvailable(.isNftTransferEnabled) else { return .assetSelection(isEnabled: false) }
 
             switch wallet.type {
-            case .real, .hardware:
+            case .real, .hardware, .dfns:
                 return .assetSelection(isEnabled: true)
             case .watch:
                 return .assetSelection(isEnabled: config.development.shouldPretendIsRealWallet)

@@ -282,6 +282,17 @@ open class EtherKeystore: NSObject, Keystore {
             .handleEvents(receiveOutput: { self.add(wallet: $0, importType: .privateKey) })
             .eraseToAnyPublisher()
     }
+    
+    public func addWallet(address: AlphaWallet.Address, origin: WalletOrigin) -> AnyPublisher<Wallet, Never> {
+        Just(address)
+            .receive(on: queue)
+            .map { address -> Wallet in
+                let wallet = Wallet(address: address, origin: origin)
+                return wallet
+            }.receive(on: RunLoop.main)
+            .handleEvents(receiveOutput: { self.add(wallet: $0, importType: .new) })
+            .eraseToAnyPublisher()
+    }
 
     public func importWallet(json: String, password: String) -> AnyPublisher<Wallet, KeystoreError> {
         Just(json)
@@ -414,7 +425,7 @@ open class EtherKeystore: NSObject, Keystore {
 
             deleteKeysAndSeedCipherTextFromKeychain(forAccount: wallet.address)
             deletePrivateKeysFromSecureEnclave(forAccount: wallet.address)
-        case .watch, .hardware:
+        case .watch, .hardware, .dfns:
             walletAddressesStore.removeAddress(wallet)
         }
 
@@ -456,6 +467,9 @@ open class EtherKeystore: NSObject, Keystore {
             case .real, .watch:
                 return await _signHashWithPrivateKey(hash: hash, for: account, prompt: prompt)
             case .hardware:
+                return await _signHashWithHardwareWallet(hash: hash, for: account, prompt: prompt)
+            case .dfns:
+                // TODO: sign through DFNS Api
                 return await _signHashWithHardwareWallet(hash: hash, for: account, prompt: prompt)
             }
         } else {
@@ -504,6 +518,9 @@ open class EtherKeystore: NSObject, Keystore {
                 return await _signHashesWithPrivateKey(hashes, for: account, prompt: prompt)
             case .hardware:
                 return await _signHashesWithHardwareWallet(hashes, for: account, prompt: prompt)
+            case .dfns:
+                // TODO: sign DFNS
+                return await _signHashesWithPrivateKey(hashes, for: account, prompt: prompt)
             }
         } else {
             return await _signHashesWithPrivateKey(hashes, for: account, prompt: prompt)

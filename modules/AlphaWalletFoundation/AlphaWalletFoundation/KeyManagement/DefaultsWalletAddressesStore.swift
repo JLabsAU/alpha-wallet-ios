@@ -96,6 +96,9 @@ public struct DefaultsWalletAddressesStore: WalletAddressesStore {
             preconditionFailure("Since we only support hardware wallet *after* we stop using this form of persisting wallets, so hardware wallets never get added here")
         case .watch:
             addToListOfWatchEthereumAddresses(wallet.address)
+        case .dfns:
+            addToListOfEthereumAddressesWithPrivateKeys(wallet.address)
+
         }
     }
 

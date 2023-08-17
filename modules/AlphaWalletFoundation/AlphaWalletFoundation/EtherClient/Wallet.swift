@@ -6,7 +6,7 @@ public enum WalletType: Equatable, Hashable, CustomStringConvertible {
     case real(AlphaWallet.Address)
     case watch(AlphaWallet.Address)
     case hardware(AlphaWallet.Address)
-
+    case dfns(AlphaWallet.Address)
     public var description: String {
         switch self {
         case .real(let address):
@@ -15,6 +15,8 @@ public enum WalletType: Equatable, Hashable, CustomStringConvertible {
             return ".watch(\(address.eip55String))"
         case .hardware(let address):
             return ".hardware(\(address.eip55String))"
+        case .dfns(let address):
+            return ".dfns(\(address.eip55String))"
         }
     }
 }
@@ -24,12 +26,13 @@ public enum WalletOrigin: Int {
     case hd
     case hardware
     case watch
+    case dfns
 }
 
 public struct Wallet: Equatable, CustomStringConvertible {
     public let type: WalletType
     public let origin: WalletOrigin
-
+    
     public var address: AlphaWallet.Address {
         switch type {
         case .real(let account):
@@ -38,6 +41,8 @@ public struct Wallet: Equatable, CustomStringConvertible {
             return address
         case .hardware(let address):
             return address
+        case .dfns(let address):
+            return address
         }
     }
 
@@ -45,7 +50,7 @@ public struct Wallet: Equatable, CustomStringConvertible {
         switch type {
         case .real:
             return true
-        case .watch, .hardware:
+        case .watch, .hardware, .dfns:
             return false
         }
     }
@@ -62,6 +67,8 @@ public struct Wallet: Equatable, CustomStringConvertible {
             self.type = .hardware(address)
         case .watch:
             self.type = .watch(address)
+        case .dfns:
+            self.type = .real(address)
         }
         self.origin = origin
     }

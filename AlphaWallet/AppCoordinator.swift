@@ -191,10 +191,9 @@ class AppCoordinator: NSObject, Coordinator, ApplicationNavigatable {
 
         addCoordinator(coordinator)
         addCoordinator(accountsCoordinator)
-
+        
         coordinator.start(animated: animated)
         navigationSubject.send(.selectedWallet)
-
         return coordinator
     }
 
@@ -474,5 +473,7 @@ extension AppCoordinator: MPCInitUserCreationCoordinatorDelegate {
         coordinator.navigationController.dismiss(animated: true)
         removeCoordinator(coordinator)
         showActiveWallet(for: wallet, animated: false)
+        UIWindow.hideLoading()
     }
+
 }

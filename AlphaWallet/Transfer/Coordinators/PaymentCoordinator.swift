@@ -236,6 +236,10 @@ class PaymentCoordinator: Coordinator {
             } else {
                 //TODO: This case should be returning an error inCoordinator. Improve this logic into single piece.
             }
+        case (_, .dfns):
+            //TODO: DFNS wallet
+            break;
+
         }
     }
 

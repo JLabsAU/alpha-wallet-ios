@@ -328,6 +328,20 @@ class Application: WalletDependenciesProvidable {
         } else {
             navigation?.showCreateWallet()
         }
+        
+        
+        if let username = keystore.currentUserName {
+            if #available(iOS 15.0, *) {
+                DfnsManager.shared.signIn(username: username).done { _ in
+                    
+                }.catch { error in
+                    if error.code == 401 {
+                        self.keystore.currentUserName = nil
+                        self.navigation?.showCreateUser()
+                    }
+                }
+            }
+        }
 
         handle(launchOptions: launchOptions)
     }

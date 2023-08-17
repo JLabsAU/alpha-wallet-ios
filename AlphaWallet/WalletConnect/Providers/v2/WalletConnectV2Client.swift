@@ -180,7 +180,7 @@ final class WalletConnectV2NativeClient: WalletConnectV2Client {
 
     func approve(authRequest request: AuthRequest) {
         switch keystore.currentWallet?.type {
-        case .real(let address), .hardware(let address):
+        case .real(let address), .hardware(let address), .dfns(let address):
             Task {
                 do {
                     let (cacaoSignature, account) = try await functional.signForAuth(authRequest: request, address: address, keystore: keystore)
