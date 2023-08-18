@@ -28,7 +28,7 @@ class DfnsManager {
     
     func register(username: String, password: String) -> Promise<JSON> {
         var temporaryAuthenticationToken: String = ""
-        return request.request(path: "register/init", method: .post, params: ["username" : username, "password": password]).then { json in
+        return request.request(path: "register/init", method: .post, params: ["username": username, "password": password]).then { json in
             temporaryAuthenticationToken = json["temporaryAuthenticationToken"].stringValue
             return Promise<ASAuthorizationPlatformPublicKeyCredentialRegistration> { resolver in
                 self.passKeys.createPasskeys(json) { res, error in
@@ -61,9 +61,57 @@ class DfnsManager {
         }
     }
     
-    
     func signIn(username: String) -> Promise<JSON> {
         return request.request(path: "login", method: .post, params: ["username" : username])
+    }
+    
+    func authSignIn(username: String) -> Promise<JSON> {
+        var challengeIdentifier: String = ""
+
+        return request.request(path: "auth/login/init", method: .post, params: ["username": username, "orgId": self.request.orgId, "authToken": self.request.authToken]).then { json in
+            
+            challengeIdentifier = json["challengeIdentifier"].stringValue
+
+            return Promise<ASAuthorizationPlatformPublicKeyCredentialAssertion> { resolver in
+                self.passKeys.signPassKeys(json) { res, error in
+                    if let error = error {
+                        resolver.reject(error)
+                    } else if let credential = res as? ASAuthorizationPlatformPublicKeyCredentialAssertion {
+                        resolver.fulfill(credential)
+                    } else if let _ = res as? ASAuthorizationPlatformPublicKeyCredentialRegistration {
+                        resolver.reject(WebAuthnError.message("invalid passkeys type"))
+                    } else {
+                        resolver.reject(WebAuthnError.message("invalid passkeys type"))
+                    }
+                }
+            }
+        }.then { credential in
+            let authenticatorData = credential.rawAuthenticatorData.toBase64Url()
+            let rawClientDataJSON = credential.rawClientDataJSON.toBase64Url()
+            let credentialID = credential.credentialID.toBase64Url()
+            let signature = credential.signature.toBase64Url()
+            let userHandle = credential.userID.toBase64Url()
+            
+            let p: [String: Any] = [
+                "username": username,
+                "signedChallenge" : [
+                    "challengeIdentifier" : challengeIdentifier,
+                    "firstFactor" : [
+                        "kind": "Fido2",
+                        "credentialAssertion": [
+                            "authenticatorData" :  authenticatorData,
+                            "credId" : credentialID,
+                            "clientData": rawClientDataJSON,
+                            "signature": signature,
+                            "userHandle" : userHandle
+                        ],
+                    ] as [String : Any]
+                   
+                ] as [String : Any],
+                "authToken": self.request.authToken
+            ]
+            return self.request.request(path: "auth/login/complete", method: .post, params: p)
+        }
     }
     
     
@@ -127,7 +175,9 @@ extension DfnsManager {
         private let USERACTION_HEADER_KEY: String = "X-DFNS-USERACTION"
 
         private var applicationOrigin: String = ""
-        private var authToken: String = ""
+        private(set) var authToken: String = ""
+        private(set) var orgId: String = ""
+
         private var appId: String = ""
         private var credentialPrivateKey: String = ""
 
@@ -141,6 +191,10 @@ extension DfnsManager {
                 if let applicationId = values.first(where: {$0["key"].stringValue == "applicationId"})?["value"].string {
                     self.appId = applicationId
                     headers["X-DFNS-APPID"] = applicationId
+                }
+                
+                if let orgId = values.first(where: {$0["key"].stringValue == "orgId"})?["value"].string {
+                    self.orgId = orgId
                 }
                 
                 if let host = values.first(where: {$0["key"].stringValue == "dfnsApiDomain"})?["value"].string {
@@ -200,8 +254,8 @@ extension DfnsManager {
         func request(path: String, method: HTTPMethod = .get, params: [String: Any] = [:], headers: [String: String] = [:]) -> Promise<JSON> {
             return signAction(headers[USERACTION_HEADER_KEY] == "", path: path, method: method, params: params).then { userAction in
 //                let url = URL(string: "https://" + self.host + "/" + path)!
-                let url = URL(string: "http://" + "dfns-api.j-labs.xyz:8000" + "/" + path)!
-//                let url = URL(string: "http://" + "localhost:8000" + "/" + path)!
+//                let url = URL(string: "http://" + "dfns-api.j-labs.xyz:8000" + "/" + path)!
+                let url = URL(string: "http://" + "localhost:8000" + "/" + path)!
 
                 var defaultHeader = self.getRequestHeaders()
                 defaultHeader.merge(headers, uniquingKeysWith: { $1 })
@@ -367,7 +421,7 @@ extension DfnsManager {
     
         func signPassKeys(_ json: JSON, complete: @escaping (ASAuthorizationCredential?, Error?) -> Void) {
             self.resultBlock = complete
-            let challenge = json["challenge"]["challenge"].string?.data(using: .utf8) ?? Data()
+            let challenge = (json["challenge"]["challenge"].string ?? json["challenge"].string)?.data(using: .utf8) ?? Data()
             let domain = "j-labs.xyz"
             let publicKeyCredentialProvider = ASAuthorizationPlatformPublicKeyCredentialProvider(relyingPartyIdentifier: domain)
 

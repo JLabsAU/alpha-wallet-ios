@@ -872,6 +872,7 @@
 		BAA1EA902A8A341500D2FEBC /* Extensions+mpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA1EA8F2A8A341500D2FEBC /* Extensions+mpc.swift */; };
 		BAB1229D2A8CBFCF0092D8CA /* dfns_yellow.svg in Resources */ = {isa = PBXBuildFile; fileRef = BAB1229B2A8CBFCE0092D8CA /* dfns_yellow.svg */; };
 		BAB1229E2A8CBFCF0092D8CA /* dfns_purple.svg in Resources */ = {isa = PBXBuildFile; fileRef = BAB1229C2A8CBFCF0092D8CA /* dfns_purple.svg */; };
+		BAFBDA4D2A8F139F00D917F2 /* dfns.json in Resources */ = {isa = PBXBuildFile; fileRef = BAFBDA4C2A8F139E00D917F2 /* dfns.json */; };
 		BBF4F9B72029D0B3009E04C0 /* GasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF4F9B62029D0B2009E04C0 /* GasViewModel.swift */; };
 		C601B18924407D3B00C763D9 /* SettingViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C601B18624407D3A00C763D9 /* SettingViewHeader.swift */; };
 		C601B18A24407D3B00C763D9 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C601B18724407D3B00C763D9 /* SettingTableViewCell.swift */; };
@@ -1805,6 +1806,7 @@
 		BAA1EA8F2A8A341500D2FEBC /* Extensions+mpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+mpc.swift"; sourceTree = "<group>"; };
 		BAB1229B2A8CBFCE0092D8CA /* dfns_yellow.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = dfns_yellow.svg; sourceTree = "<group>"; };
 		BAB1229C2A8CBFCF0092D8CA /* dfns_purple.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = dfns_purple.svg; sourceTree = "<group>"; };
+		BAFBDA4C2A8F139E00D917F2 /* dfns.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = dfns.json; sourceTree = "<group>"; };
 		BBF4F9B62029D0B2009E04C0 /* GasViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GasViewModel.swift; sourceTree = "<group>"; };
 		C601B18624407D3A00C763D9 /* SettingViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewHeader.swift; sourceTree = "<group>"; };
 		C601B18724407D3B00C763D9 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
@@ -4555,6 +4557,7 @@
 		BAA1EA8E2A8A33BD00D2FEBC /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				BAFBDA4C2A8F139E00D917F2 /* dfns.json */,
 				BAA1EA8F2A8A341500D2FEBC /* Extensions+mpc.swift */,
 			);
 			path = Helper;
@@ -4862,6 +4865,7 @@
 				C880331F20551DF800D73D6F /* howDoITransferETHIntoMyWalletInfo.html in Resources */,
 				C887C5392057B703005ACF81 /* privacyPolicy.html in Resources */,
 				290B2B541F8F50030053C83E /* Localizable.strings in Resources */,
+				BAFBDA4D2A8F139F00D917F2 /* dfns.json in Resources */,
 				2912CD021F6A830700C6CBE3 /* Assets.xcassets in Resources */,
 				C880332220551DF800D73D6F /* whatIsEthereumInfo.html in Resources */,
 				C80DC77E22AB7FAD009CFA1C /* XDAI-bridge.tsml in Resources */,

@@ -89,6 +89,7 @@ extension MPCInitUserCreationCoordinator: DfnsInitUserCreationCoordinatorDelegat
         }.ensure {
            
         }.catch { err in
+            UIWindow.hideLoading()
             UIWindow.toast(err.localizedDescription)
         }
     }

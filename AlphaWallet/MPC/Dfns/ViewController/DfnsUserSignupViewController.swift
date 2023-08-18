@@ -33,7 +33,7 @@ class DfnsUserSignupViewController: UIViewController {
 
     lazy var confirmButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("Configm", for: .normal)
+        button.setTitle("Confirm", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.backgroundColor = UIColor(hex: "171717")
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
@@ -177,17 +177,19 @@ class DfnsUserSignupViewController: UIViewController {
         
         if #available(iOS 15.0, *) {
             UIWindow.showLoading()
-            DfnsManager.shared.signIn(username: name).done { [weak self]json in
+            DfnsManager.shared.authSignIn(username: name).done { [weak self]json in
                 guard let self = self else { return }
-                if let name = json["username"].string {
+                if let _ = json["username"].string {
                     self.keystore.currentUserName = name
                     self.delegate?.didSignIn(username: name)
                 } else {
                     UIWindow.toast(json.rawString() ?? "")
+                    UIWindow.hideLoading()
                 }
             }.ensure {
-                UIWindow.hideLoading()
+
             }.catch { error in
+                UIWindow.hideLoading()
                 UIWindow.toast(error.localizedDescription)
             }
         }
