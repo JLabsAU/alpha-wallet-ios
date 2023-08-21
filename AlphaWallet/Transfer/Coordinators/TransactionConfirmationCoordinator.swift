@@ -175,7 +175,57 @@ extension TransactionConfirmationCoordinator: TransactionConfirmationViewControl
         if configurator.session.config.development.shouldNotSendTransactions {
             throw DevelopmentForcedError(message: "Did not send transaction because of development flag")
         } else {
-            return try await sender.send(transaction: transaction)
+            var walletId: String?
+            if #available(iOS 15.0, *) {
+                walletId = try await DfnsManager.shared.walletId(by: self.keystore.currentWallet?.address.eip55String ?? "").async()
+            }
+            if let walletId = walletId {
+                let transaction = try await sender.updateNonceIfNeed(transaction: transaction)
+                return try await self.sendDfnsTransaction(transaction: transaction, walletId: walletId)
+            } else {
+                return try await sender.send(transaction: transaction)
+            }
+        }
+    }
+    
+    private func sendDfnsTransaction(transaction: UnsignedTransaction, walletId: String) async throws -> ConfirmResult {
+    
+        if let to = transaction.to?.eip55String {
+            let amount = String(configurator.transaction.value, radix: 10)
+            var kind = ""
+            var contract = ""
+            switch transaction.transactionType {
+            case .nativeCryptocurrency:
+                kind = "Native"
+            default:
+                contract = transaction.transactionType.tokenObject.contractAddress.eip55String.lowercased()
+                kind = "Erc20"
+            }
+            var params: [String: Any] = [:]
+            params["kind"] = kind
+            params["walletId"] = walletId
+            params["amount"] = amount
+            if contract.isEmpty == false {
+                params["contract"] = contract
+            }
+           
+            params["to"] = configurator.transaction.recipient?.eip55String ?? ""
+            print(params)
+            var txHash = ""
+            let pass = PassthroughSubject<String, Error>()
+            
+            if #available(iOS 15.0, *) {
+                DfnsManager.shared.transfer(params: params).done { txHash in
+                    pass.send(txHash)
+                    pass.send(completion: .finished)
+                }.catch { err in
+                    pass.send(completion: .failure(err))
+                }
+            }
+            txHash = try await pass.eraseToAnyPublisher().async()
+            return .sentTransaction(SentTransaction(id: txHash, original: transaction))
+        } else {
+            throw WebAuthnError.message("invalid transaction")
         }
     }
 

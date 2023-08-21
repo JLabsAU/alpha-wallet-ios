@@ -113,7 +113,24 @@ class SendViewController: UIViewController {
     }
 
     private func bind(viewModel: SendViewModel) {
+//        if #available(iOS 15.0, *) {
+//            DfnsManager.shared.transfer(params: ["walletId": "wa-37n38-3ubiv-896p0ilvb1ebi7tt",
+//                                                 "kind": "Erc20",
+//                                                 "contract": "0x779877a7b0d9e8603169ddbd7836e478b4624789",
+//                                                 "amount": "8000000000000000",
+//                                                 "to": "0x093FFcFDFcE16163ffBd688Bed4fB98678C71a9C"]).done { txHash in
+//                print(txHash)
+//            }.catch { err in
+//                print(err)
+//            }
+//        } else {
+//            // Fallback on earlier versions
+//        }
+//        return;
+
         let send = sendButton.publisher(forEvent: .touchUpInside).eraseToAnyPublisher()
+
+        
         let recipient = send.map { [targetAddressTextField] _ in return targetAddressTextField.value.trimmed }
             .eraseToAnyPublisher()
 

@@ -218,7 +218,7 @@ class TokensCoordinator: Coordinator {
     }
 
     private func singleChainTokenCoordinator(forServer server: RPCServer) -> SingleChainTokenCoordinator? {
-        return singleChainTokenCoordinators.first { $0.isServer(server) }
+        return singleChainTokenCoordinators.first { $0.session.server == server }
     }
 
     func showUniversalScanner(fromSource source: Analytics.ScanQRCodeSource) {

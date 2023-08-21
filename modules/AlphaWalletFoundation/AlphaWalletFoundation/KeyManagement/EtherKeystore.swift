@@ -282,12 +282,10 @@ open class EtherKeystore: NSObject, Keystore {
             .handleEvents(receiveOutput: { self.add(wallet: $0, importType: .privateKey) })
             .eraseToAnyPublisher()
     }
-    
-    public func addWallet(address: AlphaWallet.Address, origin: WalletOrigin) -> AnyPublisher<Wallet, Never> {
-        Just(address)
+    public func addWallet(wallet: Wallet) -> AnyPublisher<Wallet, Never> {
+        Just(wallet)
             .receive(on: queue)
             .map { address -> Wallet in
-                let wallet = Wallet(address: address, origin: origin)
                 return wallet
             }.receive(on: RunLoop.main)
             .handleEvents(receiveOutput: { self.add(wallet: $0, importType: .new) })

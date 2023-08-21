@@ -38,6 +38,16 @@ public class SendTransaction {
         }
     }
 
+    public func updateNonceIfNeed(transaction: UnsignedTransaction)  async throws -> UnsignedTransaction {
+        if transaction.nonce >= 0 {
+            return transaction
+        } else {
+            let nonce = try await session.blockchainProvider.nextNonce(wallet: session.account.address).first
+            let transaction = transaction.updating(nonce: nonce)
+            return transaction
+        }
+    }
+    
     public func send(transaction: UnsignedTransaction) async throws -> ConfirmResult {
         if transaction.nonce >= 0 {
             return try await signAndSend(transaction: transaction)

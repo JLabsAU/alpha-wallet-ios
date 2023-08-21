@@ -81,7 +81,7 @@ extension MPCInitUserCreationCoordinator: DfnsInitUserCreationCoordinatorDelegat
     func createAndLoadWallete(_ username: String) {
         UIWindow.showLoading()
         let _ = self.createDfnsWallet().then { json in
-            return self.loadDfnsWallets()
+            return self.loadDfnsWallets(retry: true)
         }.then { json in
             return self.importWallet(json)
         }.done { wallet in
@@ -97,7 +97,8 @@ extension MPCInitUserCreationCoordinator: DfnsInitUserCreationCoordinatorDelegat
     func importWallet(_ json: JSON) -> Promise<Wallet> {
         return Promise { resolver in
             let address: String = json["items"].arrayValue.first?["address"].stringValue ?? ""
-            self.keystore.addWallet(address: .init(string: address)!, origin: .dfns).sink { wallet in
+            let walletId: String = json["items"].arrayValue.first?["id"].stringValue ?? ""
+            self.keystore.addWallet(wallet: .init(address: .init(string: address)!, origin: .dfns, walletId: walletId)).sink { wallet in
                 resolver.fulfill(wallet)
             }.store(in: &cancellable)
         }
@@ -109,8 +110,15 @@ extension MPCInitUserCreationCoordinator: DfnsInitUserCreationCoordinatorDelegat
     }
     
     @available(iOS 15.0, *)
-    func loadDfnsWallets() -> Promise<JSON> {
-        return DfnsManager.shared.listWallets()
+    func loadDfnsWallets(retry: Bool = false) -> Promise<JSON> {
+        return DfnsManager.shared.listWallets().then { json in
+            let address: String = json["items"].arrayValue.first?["address"].stringValue ?? ""
+            if address.isEmpty && retry {
+                return self.loadDfnsWallets(retry: true)
+            } else {
+                return Promise.value(json)
+            }
+        }
     }
     
     func createInstantWallet(username: String) {

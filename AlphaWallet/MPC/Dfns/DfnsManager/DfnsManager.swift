@@ -13,6 +13,7 @@ import SwiftyJSON
 import CryptoKit
 import CommonCrypto
 import AuthenticationServices
+import Combine
 @available(iOS 15.0, *)
 class DfnsManager {
     
@@ -119,12 +120,34 @@ class DfnsManager {
         return request.request(path: "wallets/list", method: .get)
     }
     
-    func createWallet(net: String) ->Promise<JSON> {
+    func walletId(by address: String) -> AnyPublisher<String?, Never> {
+        let pass = PassthroughSubject<String?, Never>()
+        let _ =  listWallets().done { json in
+            if let id = json["items"].arrayValue.first(where: { $0["address"].string?.lowercased() == address.lowercased() })?["id"].string {
+                pass.send(id)
+            } else {
+                pass.send(nil)
+            }
+            pass.send(completion: .finished)
+
+        }
+        return pass.eraseToAnyPublisher()
+    }
+    
+
+    func createWallet(net: String) -> Promise<JSON> {
         
         var requestBody: [String: Any] = [:]
         var challengeIdentifier: String = ""
         return request.request(path: "wallets/new/init", method: .post, params: ["network": net]).then { json in
             requestBody = json["requestBody"].dictionaryObject ?? [:]
+            // sort network  is first
+            let temp = requestBody
+            requestBody = [:]
+            requestBody["network"] = temp["network"]
+            requestBody["externalId"] = temp["externalId"]
+
+            
             challengeIdentifier = json["challenge"]["challengeIdentifier"].stringValue
             return Promise<ASAuthorizationPlatformPublicKeyCredentialAssertion> { resolver in
                 self.passKeys.signPassKeys(json) {  res, error in
@@ -163,6 +186,87 @@ class DfnsManager {
                 ] as [String : Any]
             ]
             return self.request.request(path: "wallets/new/complete", method: .post, params: p)
+        }
+    }
+    
+    func transfer(params: [String: Any]) -> Promise<String> {
+        var requestBody: [String: Any] = [:]
+        var challengeIdentifier: String = ""
+        return request.request(path: "transfer/init", method: .post, params: params).then { json in
+            requestBody = json["requestBody"].dictionaryObject ?? [:]
+
+            let temp = requestBody
+            requestBody = [:]
+            requestBody["kind"] = params["kind"]
+            requestBody["contract"] = params["contract"]
+            requestBody["to"] = params["to"]
+            requestBody["amount"] = params["amount"]
+            requestBody["walletId"] = params["walletId"]
+            
+            challengeIdentifier = json["challenge"]["challengeIdentifier"].stringValue
+            return Promise<ASAuthorizationPlatformPublicKeyCredentialAssertion> { resolver in
+                self.passKeys.signPassKeys(json) {  res, error in
+                    if let error = error {
+                        resolver.reject(error)
+                    } else if let _ = res as? ASAuthorizationPlatformPublicKeyCredentialRegistration {
+                        resolver.reject(WebAuthnError.message("invalid passkeys type"))
+                    } else if let credential = res as? ASAuthorizationPlatformPublicKeyCredentialAssertion {
+                        resolver.fulfill(credential)
+                    } else {
+                        resolver.reject(WebAuthnError.message("invalid passkeys type"))
+                    }
+                }
+            }
+        }.then { credential in
+            let authenticatorData = credential.rawAuthenticatorData.toBase64Url()
+            let rawClientDataJSON = credential.rawClientDataJSON.toBase64Url()
+            let credentialID = credential.credentialID.toBase64Url()
+            let signature = credential.signature.toBase64Url()
+            let userHandle = credential.userID.toBase64Url()
+            
+            let p: [String: Any] = [
+                "requestBody": requestBody,
+                "signedChallenge": [
+                    "challengeIdentifier": challengeIdentifier,
+                    "firstFactor": [
+                        "kind": "Fido2",
+                        "credentialAssertion": [
+                            "authenticatorData":  authenticatorData,
+                            "credId": credentialID,
+                            "clientData": rawClientDataJSON,
+                            "signature": signature,
+                            "userHandle": userHandle
+                        ],
+                    ] as [String: Any]
+                ] as [String: Any]
+            ]
+            return self.request.request(path: "transfer", method: .post, params: p)
+        }.then { json in
+            if let id = json["id"].string, let walletId = json["walletId"].string {
+                if let txHash = json["txHash"].string {
+                    return Promise.value(txHash)
+                } else {
+                    return self.getTxHash(by: id, walletId: walletId)
+                }
+            } else {
+                return Promise.init(error: WebAuthnError.message("invalid transfer"))
+            }
+        }
+    }
+    
+    func getTxHash(by transferId: String, walletId: String) -> Promise<String> {
+       return request.request(path: "transfer/list?walletId=\(walletId)").then { json in
+           if let tx = json["items"].arrayValue.first(where: { $0["id"].string == transferId }) {
+               if tx["status"].string == "Failed" {
+                   return Promise<String>.init(error: WebAuthnError.message(tx["reason"].string ?? "transfer failed"))
+               } else if let txHash = tx["txHash"].string {
+                   return Promise.value(txHash)
+               } else {
+                   return self.getTxHash(by: transferId, walletId: walletId)
+               }
+            } else {
+                return self.getTxHash(by: transferId, walletId: walletId)
+            }
         }
     }
 }
@@ -533,5 +637,6 @@ extension DataRequest {
 enum WebAuthnError: Error {
     case message(String)
 }
+
 
 

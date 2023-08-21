@@ -59,7 +59,7 @@ public struct Wallet: Equatable, CustomStringConvertible {
         type.description
     }
 
-    public init(address: AlphaWallet.Address, origin: WalletOrigin) {
+    public init(address: AlphaWallet.Address, origin: WalletOrigin, walletId: String? = nil) {
         switch origin {
         case .privateKey, .hd:
             self.type = .real(address)
