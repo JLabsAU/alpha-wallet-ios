@@ -358,8 +358,8 @@ extension DfnsManager {
         func request(path: String, method: HTTPMethod = .get, params: [String: Any] = [:], headers: [String: String] = [:]) -> Promise<JSON> {
             return signAction(headers[USERACTION_HEADER_KEY] == "", path: path, method: method, params: params).then { userAction in
 //                let url = URL(string: "https://" + self.host + "/" + path)!
-//                let url = URL(string: "http://" + "dfns-api.j-labs.xyz:8000" + "/" + path)!
-                let url = URL(string: "http://" + "localhost:8000" + "/" + path)!
+                let url = URL(string: "http://" + "dfns-api.j-labs.xyz:8000" + "/" + path)!
+//                let url = URL(string: "http://" + "localhost:8000" + "/" + path)!
 
                 var defaultHeader = self.getRequestHeaders()
                 defaultHeader.merge(headers, uniquingKeysWith: { $1 })
