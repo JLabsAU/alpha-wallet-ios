@@ -59,7 +59,7 @@ extension MPCInitUserCreationCoordinator: DfnsInitUserCreationCoordinatorDelegat
             UIWindow.showLoading()
             let _ = loadDfnsWallets().done { json in
                 if let address = json["items"].arrayValue.first?["address"].stringValue {
-                    if let curWallet = self.keystore.wallets.first(where: { $0.address.eip55String ==  AlphaWallet.Address(string: address)?.eip55String && $0.origin == .dfns }) {
+                    if let curWallet = self.keystore.wallets.first(where: { $0.address.eip55String ==  AlphaWallet.Address(string: address)?.eip55String }) {
                         self.delegate?.didAddUser(username: user, wallet: curWallet, coordinator: self)
                     } else {
                         let _ = self.importWallet(json).done { wallet in
