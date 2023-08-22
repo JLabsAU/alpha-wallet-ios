@@ -58,9 +58,7 @@ extension MPCInitUserCreationCoordinator: DfnsInitUserCreationCoordinatorDelegat
         if #available(iOS 15.0, *) {
             UIWindow.hideLoading()
             UIWindow.toast("init wallet...", duration: 1.5)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                UIWindow.showLoading()
-            }
+            
             let _ = self.loadDfnsWallets().done { json in
                 if let address = json["items"].arrayValue.first?["address"].stringValue {
                     if let curWallet = self.keystore.wallets.first(where: { $0.address.eip55String ==  AlphaWallet.Address(string: address)?.eip55String }) {
@@ -71,6 +69,7 @@ extension MPCInitUserCreationCoordinator: DfnsInitUserCreationCoordinatorDelegat
                         }
                     }
                 } else {
+                    UIWindow.showLoading()
                     self.createAndLoadWallete(user)
                 }
             }.ensure {
