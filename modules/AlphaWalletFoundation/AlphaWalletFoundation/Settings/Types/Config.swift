@@ -256,14 +256,14 @@ public struct Config {
             if let chainIds = defaults.array(forKey: Keys.enabledServers) as? [Int] {
                 if chainIds.isEmpty {
                     //TODO remote log. Why is this possible? Note it's not nil (which is possible for new installs)
-                    return Constants.defaultEnabledServers
+                    return Constants.defaultEnabledTestnetServers
                 } else {
                     //Remove duplicates. Useful for the occasion where users have enabled a chain, then we disable that chain in an update and the user might now end up with the Ethereum mainnet twice (default when we can't find a chain that we removed) in their enabled list
                     let servers: [RPCServer] = Array(Set(chainIds.map { .init(chainID: $0) }.filter { $0.conflictedServer == nil }))
                     return servers
                 }
             } else {
-                return Constants.defaultEnabledServers
+                return Constants.defaultEnabledTestnetServers
             }
         }
         set {

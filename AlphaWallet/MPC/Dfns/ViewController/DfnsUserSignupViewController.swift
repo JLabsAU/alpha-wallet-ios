@@ -148,20 +148,25 @@ class DfnsUserSignupViewController: UIViewController {
             return
         }
         if #available(iOS 15.0, *) {
-            UIWindow.showLoading()
+            UIWindow.toast("init user...", duration: 3)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                UIWindow.showLoading()
+            }
             DfnsManager.shared.register(username: name, password: password).done { [weak self]json in
                 guard let self = self else { return }
                 if let name = json["username"].string {
-                    UIWindow.toast("Go to sign in")
                     self.switchSignIn()
                     self.nameInput.text = name
-                    self.delegate?.didSignUp(username: name)
+//                    self.delegate?.didSignUp(username: name)
+                    self.delegate?.didSignIn(username: name) // just login cookie has been set
+                    self.passwordInput.text = ""
                 } else {
                     UIWindow.toast(json.rawString() ?? "")
+                    UIWindow.hideLoading()
                 }
-            }.ensure {
-                UIWindow.hideLoading()
             }.catch { error in
+                UIWindow.hideLoading()
                 UIWindow.toast(error.localizedDescription)
             }
         } else {

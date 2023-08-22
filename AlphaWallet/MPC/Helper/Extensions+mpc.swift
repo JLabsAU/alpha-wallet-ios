@@ -82,8 +82,8 @@ public extension String {
     }
 }
 extension UIView {
-    func toast(_ msg: String) {
-        self.makeToast(msg, position: .center)
+    func toast(_ msg: String, duration: TimeInterval = 2) {
+        self.makeToast(msg, duration: duration ,position: .center)
     }
     @discardableResult
     func addedOn(_ superView: UIView?) -> UIView {
@@ -105,8 +105,8 @@ extension UIView {
     }
 }
 extension UIWindow {
-    static func toast(_ msg: String) {
-        UIApplication.shared.keyWindow?.toast(msg)
+    static func toast(_ msg: String, duration: TimeInterval = 2) {
+        UIApplication.shared.keyWindow?.toast(msg, duration: duration)
     }
     
     static func showLoading() {

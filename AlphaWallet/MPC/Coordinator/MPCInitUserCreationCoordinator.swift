@@ -56,8 +56,12 @@ extension MPCInitUserCreationCoordinator: DfnsInitUserCreationCoordinatorDelegat
     
     func didSignIn(user: String) {
         if #available(iOS 15.0, *) {
-            UIWindow.showLoading()
-            let _ = loadDfnsWallets().done { json in
+            UIWindow.hideLoading()
+            UIWindow.toast("init wallet...", duration: 1.5)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                UIWindow.showLoading()
+            }
+            let _ = self.loadDfnsWallets().done { json in
                 if let address = json["items"].arrayValue.first?["address"].stringValue {
                     if let curWallet = self.keystore.wallets.first(where: { $0.address.eip55String ==  AlphaWallet.Address(string: address)?.eip55String }) {
                         self.delegate?.didAddUser(username: user, wallet: curWallet, coordinator: self)
@@ -86,8 +90,6 @@ extension MPCInitUserCreationCoordinator: DfnsInitUserCreationCoordinatorDelegat
             return self.importWallet(json)
         }.done { wallet in
             self.delegate?.didAddUser(username: username, wallet: wallet, coordinator: self)
-        }.ensure {
-           
         }.catch { err in
             UIWindow.hideLoading()
             UIWindow.toast(err.localizedDescription)
